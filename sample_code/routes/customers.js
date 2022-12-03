@@ -19,30 +19,66 @@ const secret = fs.readFileSync(__dirname + '/../keys/jwtkey').toString();
 // in https://learn.zybooks.com/zybook/ARIZONAECE413SalehiFall2022/chapter/9/section/3
 
 router.post("/signUp", function (req, res) {
-   Customer.findOne({ email: req.body.email }, function (err, customer) {
-       if (err) res.status(401).json({ success: false, err: err });
-       else if (customer) {
-           res.status(401).json({ success: false, msg: "This email already used" });
-       }
-       else {
-           const passwordHash = bcrypt.hashSync(req.body.password, 10);
-           const newCustomer = new Customer({
-               email: req.body.email,
-               passwordHash: passwordHash
-           });
+    let emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
 
-           newCustomer.save(function (err, customer) {
-               if (err) {
-                   res.status(400).json({ success: false, err: err });
-               }
-               else {
-                   let msgStr = `Customer (${req.body.email}) account has been created.`;
-                   res.status(201).json({ success: true, message: msgStr });
-                   console.log(msgStr);
-               }
-           });
-       }
-   });
+    Customer.findOne({ email: req.body.email }, function (err, customer) {
+        if (err) res.status(401).json({ success: false, err: err });
+        else if (customer) {
+            res.status(401).json({ success: false, msg: "This email already used" });
+        }
+        else if (!emailFormat.test(req.body.email)) { //check if follows email pattern
+            res.status(401).json({ success: false, msg: "Invalid email" });
+        }
+        else {
+            //check for strong password
+            let inputPassword = req.body.password;
+            let containsDigit = false;
+            let containsUpper = false;
+            let containsLower = false;
+            for (let i = 0; i < inputPassword.length; i++) {
+                let char = inputPassword.charCodeAt(i);      
+                if (char >= 48 && char <= 57) {
+                    containsDigit = true;
+                }
+                if (char >= 65 && char <= 90) {
+                    containsUpper = true;
+                }
+                if (char >= 97 && char <= 122) {
+                    containsLower = true;
+                }
+            }
+            if (inputPassword.length < 10 || inputPassword.length > 20) {
+                res.status(401).json({ success: false, msg: "Invalid password, must be 10-20 characters long" });
+            }
+            else if (containsDigit != true) {
+                res.status(401).json({ success: false, msg: "Invalid password, must contain digit" });
+            }
+            else if (containsLower != true) {
+                res.status(401).json({ success: false, msg: "Invalid password, must contain lower case letter" });
+            }
+            else if (containsUpper != true) {
+                res.status(401).json({ success: false, msg: "Invalid password, must contain upper case letter" });
+            }
+            else {
+                const passwordHash = bcrypt.hashSync(inputPassword, 10);
+                const newCustomer = new Customer({
+                   email: req.body.email,
+                   passwordHash: passwordHash
+                });
+    
+                newCustomer.save(function (err, customer) {
+                    if (err) {
+                       res.status(400).json({ success: false, err: err });
+                    }
+                    else {
+                        let msgStr = `Customer (${req.body.email}) account has been created.`;
+                        res.status(201).json({ success: true, message: msgStr });
+                        console.log(msgStr);
+                    }
+                });
+            }
+        }
+    });
 });
 
 
