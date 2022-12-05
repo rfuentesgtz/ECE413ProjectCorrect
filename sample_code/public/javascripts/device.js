@@ -21,7 +21,7 @@ function device() {
         if (data.success) {
             // after 1 second, move to "login.html"
             setTimeout(function(){
-                window.location = "summary.html";
+                window.location = "account.html";
             }, 1000);
         }
     })

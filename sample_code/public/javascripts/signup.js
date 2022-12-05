@@ -28,7 +28,7 @@ function signup() {
         if (data.success) {
             // after 1 second, move to "login.html"
             setTimeout(function(){
-                window.location = "summary.html";
+                window.location = "login.html";
             }, 1000);
         }
     })
