@@ -26,7 +26,7 @@ function signup() {
     .done(function (data, textStatus, jqXHR) {
         $('#rxData').html(JSON.stringify(data, null, 2));
         if (data.success) {
-            sessionStorage.setItem("email", email);
+            //sessionStorage.setItem("email", email);
             // after 1 second, move to "login.html"
             setTimeout(function(){
                 sessionStorage.setItem("email", email);

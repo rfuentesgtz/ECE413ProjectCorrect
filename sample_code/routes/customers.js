@@ -71,8 +71,14 @@ router.post("/signUp", function (req, res) {
                        res.status(400).json({ success: false, err: err });
                     }
                     else {
+                        const token = jwt.encode({ email: customer.email }, secret);
+                        //update user's last access time
+                        customer.lastAccess = new Date();
+                        customer.save((err, customer) => {
+                            console.log("User's LastAccess has been update.");
+                        });
                         let msgStr = `Customer (${req.body.email}) account has been created.`;
-                        res.status(201).json({ success: true, message: msgStr });
+                        res.status(201).json({ success: true, token: token, message: msgStr });
                         console.log(msgStr);
                     }
                 });
