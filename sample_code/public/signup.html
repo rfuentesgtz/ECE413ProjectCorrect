@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Authentication Example Sign up</title>
+    <title>Sign up</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="stylesheets/site.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="javascripts/signup.js"></script>
   </head>
   <body>
-    <div class="container">
-      <a href="index.html" class="left brand-logo valign-wrapper">Home</a>
-      <a href="login.html" class="left brand-logo valign-wrapper">LogIn</a>
-      <br/>
+  
+      <nav class="nav-wrapper bg-az-blue lighten-4" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="index.html" class="left brand-logo valign-wrapper">Home</a>
+        </div>
+    </nav>
+
+    <nav class="nav-wrapper bg-az-green lighten-4" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="login.html" class="left brand-logo valign-wrapper">Login</a>
+        </div>
+    </nav>
+
       <h1>Sign Up</h1>
-      <br/>
-      
+
       <div>
         <div>
           <label for="email">Email: </label>
@@ -28,9 +41,6 @@
         <br/>
         <button id="btnSignUp">Sign Up</button>
       </div>
-    </div>
-    <div style="display:inline-block; width:45vw; height: 60vh; margin: 2vh 20vw; ">
-      <textarea id="rxData" style="width:100%; height:100%"></textarea>
-    </div>
+   
   </body>
 </html>
