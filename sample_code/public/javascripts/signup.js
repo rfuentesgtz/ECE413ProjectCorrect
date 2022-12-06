@@ -29,6 +29,8 @@ function signup() {
             sessionStorage.setItem("email", email);
             // after 1 second, move to "login.html"
             setTimeout(function(){
+                sessionStorage.setItem("email", email);
+                localStorage.setItem("token", data.token);
                 window.location = "account.html";
             }, 1000);
         }
