@@ -1,27 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Authentication Example - Account</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="javascripts/account.js"></script>
-  </head>
-  <body>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="stylesheets/site.css" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Heart Sensor System</title>
+   <!-- Styles -->
+<style>
+  #chartdiv {
+    width: 100%;
+    height: 500px;
+  }
+  </style>
+  
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  
+  <!-- Chart code -->
+  <script>
+  am5.ready(function() {
+  
+  // Create root element
+  // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+  var root = am5.Root.new("chartdiv");
+  
+  
+  // Set themes
+  // https://www.amcharts.com/docs/v5/concepts/themes/
+  root.setThemes([
+    am5themes_Animated.new(root)
+  ]);
+  
+  
+  // Create chart
+  // https://www.amcharts.com/docs/v5/charts/xy-chart/
+  var chart = root.container.children.push(am5xy.XYChart.new(root, {
+    panX: false,
+    panY: false,
+    wheelX: "panX",
+    wheelY: "zoomX"
+  }));
+  
+  
+  // Add cursor
+  // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+  var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+    behavior: "zoomX"
+  }));
+  cursor.lineY.set("visible", false);
+  
+  var date = new Date();
+  date.setHours(0, 0, 0, 0);
+  var value = 100;
+  
+  function generateData() {
+    value = Math.round((Math.random() * 10 - 5) + value);
+    am5.time.add(date, "day", 1);
+    return {
+      date: date.getTime(),
+      value: value
+    };
+  }
+  
+  function generateDatas(count) {
+    var data = [];
+    for (var i = 0; i < count; ++i) {
+      data.push(generateData());
+    }
+    return data;
+  }
+  
+  
+  // Create axes
+  // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+  var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+    maxDeviation: 0,
+    baseInterval: {
+      timeUnit: "day",
+      count: 1
+    },
+    renderer: am5xy.AxisRendererX.new(root, {}),
+    tooltip: am5.Tooltip.new(root, {})
+  }));
+  
+  var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+    renderer: am5xy.AxisRendererY.new(root, {})
+  }));
+  
+  
+  // Add series
+  // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+  var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+    name: "Series",
+    xAxis: xAxis,
+    yAxis: yAxis,
+    valueYField: "value",
+    valueXField: "date",
+    tooltip: am5.Tooltip.new(root, {
+      labelText: "{valueY}"
+    })
+  }));
+  
+  
+  
+  // Add scrollbar
+  // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+  chart.set("scrollbarX", am5.Scrollbar.new(root, {
+    orientation: "horizontal"
+  }));
+  
+  var data = generateDatas(50);
+  series.data.setAll(data);
+  
+  
+  // Make stuff animate on load
+  // https://www.amcharts.com/docs/v5/concepts/animations/
+  series.appear(1000);
+  chart.appear(1000, 100);
+  
+  }); // end am5.ready()
+  </script>
+  
+  
+</head>
+<body>
+    <nav class="nav-wrapper bg-az-blue lighten-4" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="index2.html" class="left brand-logo valign-wrapper">Home</a>
+        </div>
+    </nav>
+
+    <nav class="nav-wrapper bg-az-green lighten-4" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="device.html" class="left brand-logo valign-wrapper">Add or Choose a Device</a>
+        </div>
+    </nav>
+
     <div class="container">
-      <a href="index2.html" class="left brand-logo valign-wrapper">Home</a>
-      <br/>
-      <h1>Token-based User authenticiation example - Account</h1>
-      <br/>
-      
-      <div>
-        <button id="btnLogOut">LogOut</button>
-      </div>
+        <div>
+        <h2>Current Device</h2>
+        </div>
+        <div>
+        <h2>Past Week Summary</h2>
+        <!-- HTML -->
+  <div id="chartdiv"></div>
+        </div>
+
     </div>
-    <div style="display:inline-block; width:45vw; height: 60vh; margin: 2vh 20vw; ">
-      <textarea id="rxData" style="width:100%; height:100%"></textarea>
-    </div>
+
+    <footer class="page-footer bg-az-red darken-2">
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2022, Group 14
+                <span class="grey-text text-lighten-4 right">Electrical and Computer Engineering, University of Arizona</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
       (function () {
