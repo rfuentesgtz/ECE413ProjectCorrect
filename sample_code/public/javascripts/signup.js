@@ -26,9 +26,10 @@ function signup() {
     .done(function (data, textStatus, jqXHR) {
         $('#rxData').html(JSON.stringify(data, null, 2));
         if (data.success) {
+            sessionStorage.setItem("email", email);
             // after 1 second, move to "login.html"
             setTimeout(function(){
-                window.location = "summary.html";
+                window.location = "account.html";
             }, 1000);
         }
     })

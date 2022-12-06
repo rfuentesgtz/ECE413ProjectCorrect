@@ -18,5 +18,6 @@ $(function (){
 
 function logout() {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("email", email);
     window.location.replace("index.html");
 }

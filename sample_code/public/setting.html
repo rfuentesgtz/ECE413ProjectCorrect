@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Add or Edit a Device</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/newstyle.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="javascripts/setting.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <a href="index2.html" class="left brand-logo valign-wrapper">Home</a>
+      <br/>
+      <h1>Settings</h1>
+        <div>
+          <h2>List of registered devices:</h2>
+          <!--have a List of Existing Devices-->
+          <table class="device-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>placeholder name</td>
+                <td>placeholder ID</td>
+                <td>button that will delete</td>
+              </tr>
+              <tr>
+                <td>placeholder name</td>
+                <td>placeholder ID</td>
+                <td>button that will delete</td>
+              </tr>
+            </tbody> 
+          </table>
+        </div>
+        <div>
+          <div>
+            <h4>Register a new device: </h4>
+            <div>
+              <label for="name">Enter name of device:</label>
+              <input type="text" id="name" placeholder="Enter name" name="name">
+            </div>
+            <div>
+              <label for="id">Enter ID of device:</label>
+              <input type="text" id="id" placeholder="Enter ID" name="id">
+            </div>
+          </div>
+          <button id="btnRegister">Register</button>
+          <br/>
+        </div>
+        <br/>
+      <div>
+        <h2>Account Information:</h2>
+        <table class="account-table">
+          <tr>
+            <th>Email</th>
+            <td><p id="userEmail">temp name</p></td>
+          </tr>
+          <tr>
+            <th>Password</th>
+            <td>
+              <div>
+                <label for="old">Enter current password:</label>
+                <input type="text" id="old" placeholder="Current Password" name="old">
+              </div>
+              <div>
+                <label for="new">Enter new password:</label>
+                <input type="text" id="new" placeholder="New Password" name="new">
+              </div>
+              <button id="btnChangeP">Change Password</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </body>
+</html>

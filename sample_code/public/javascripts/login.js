@@ -13,6 +13,7 @@ function login() {
         dataType: 'json'
     })
     .done(function (data, textStatus, jqXHR) {
+        sessionStorage.setItem("email", email);
         localStorage.setItem("token", data.token);
         window.location.replace("account.html");
     })
