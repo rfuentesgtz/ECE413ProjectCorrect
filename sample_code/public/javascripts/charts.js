@@ -43,6 +43,7 @@
     };
   }
   
+  // Edit here to receive argon data
   function generateDatas(count) {
     var data = [];
     for (var i = 0; i < count; ++i) {
@@ -90,7 +91,7 @@
     orientation: "horizontal"
   }));
   
-  var data = generateDatas(50);
+  var data = generateDatas(25);
   series.data.setAll(data);
   
   
