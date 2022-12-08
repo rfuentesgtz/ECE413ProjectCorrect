@@ -19,38 +19,48 @@ router.post("/changePassword", function(req, res) {
     inOldPas = req.body.old;
     let emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
     
+    let msgStr = `Input (${inNewPas}).`;
+    res.status(201).json({ success: true, message: msgStr });
+/*
     //check if old password matches current password
-    if ('email' in sessionStorage) {
-        let userEmail = sessionStorage.getItem('email');
-    }
-    Customer.findOne({  }, function (err, customer) {
+    let userEmail = sessionStorage.getItem("email");
+    Customer.findOne(userEmail, function (err, customer) {
+
        if (err) {
            res.status(400).send(err);
        }
        else if (!customer) {
            // Username not in the database
-           res.status(401).json({ error: "Login failure!!" });
+           res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
        }
        else {
-           if (bcrypt.compareSync(req.body.password, customer.passwordHash)) {
-               const token = jwt.encode({ email: customer.email }, secret);
-               //update user's last access time
-               customer.lastAccess = new Date();
-               customer.save((err, customer) => {
-                   console.log("User's LastAccess has been update.");
-               });
-               // Send back a token that contains the user's username
-               res.status(201).json({ success: true, token: token, msg: "Login success" });
-           }
-           else {
-               res.status(401).json({ success: false, msg: "Email or password invalid." });
-           }
-       }
+            //check if new password is valid
+            if(inNewPas == inOldPas) {
+                res.status(401).json({success: false, msg: "Old password is same as new password"});
+            }
+            //else if(inNewPas != )
+            //if not send error
+            //change current password to new password
+        
+    //     if (bcrypt.compareSync(req.body.password, customer.passwordHash)) {
+    //            const token = jwt.encode({ email: customer.email }, secret);
+    //            //update user's last access time
+    //            customer.lastAccess = new Date();
+    //            customer.save((err, customer) => {
+    //                console.log("User's LastAccess has been update.");
+    //            });
+    //            // Send back a token that contains the user's username
+    //            res.status(201).json({ success: true, token: token, msg: "Login success" });
+    //        }
+    //        else {
+    //            res.status(401).json({ success: false, msg: "Email or password invalid." });
+    //        }
+        }
    });
-    //check if new password is valid
-        //if not send error
-    //change current password to new password
-})
+    */
+});
+
+/*
 
 router.post("/signUp", function (req, res) {
     let emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
@@ -153,5 +163,5 @@ router.post("/logIn", function (req, res) {
        }
    });
 });
-
+*/
 module.exports = router;

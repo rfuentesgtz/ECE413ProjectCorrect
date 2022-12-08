@@ -4,7 +4,8 @@ function main() {
 
     //put user email on page
     let emailName = document.getElementById("userEmail");
-    emailName.innerHTML = sessionStorage.getItem('email');
+    emailName.innerText = sessionStorage.getItem("email");
+    //window.alert(emailName);
 
     //change password
     function changepassword() {
