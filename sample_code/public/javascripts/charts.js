@@ -91,7 +91,7 @@
     orientation: "horizontal"
   }));
   
-  var data = generateDatas(25);
+  var data = generateDatas(100);
   series.data.setAll(data);
   
   
