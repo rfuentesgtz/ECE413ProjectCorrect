@@ -20,18 +20,19 @@ function main() {
 
         let txdata = {
             old: $('#old').val(),
-            new: $('#new').val()
+            new: $('#new').val(),
+            user: sessionStorage.getItem("email")
         };
 
         $.ajax({
-            url: '/customers/changePassword',
+            url: '/settings/changePassword',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(txdata),
             dataType: 'json'
         })
         .done(function (data, textStatus, jqXHR) {
-            localStorage.setItem("token", data.token);
+            $('#rxData').html(JSON.stringify(data, null, 2));
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $('#rxData').html(JSON.stringify(jqXHR, null, 2));

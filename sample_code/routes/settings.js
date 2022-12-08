@@ -17,14 +17,25 @@ router.post("/changePassword", function(req, res) {
     //inputs will be old password and new password
     inNewPas = req.body.new;
     inOldPas = req.body.old;
-    let emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
-    
-    let msgStr = `Input (${inNewPas}).`;
-    res.status(201).json({ success: true, message: msgStr });
-/*
+
+    let containsDigit = false;
+    let containsUpper = false;
+    let containsLower = false;
+    for (let i = 0; i < inNewPas.length; i++) {
+        let char = inNewPas.charCodeAt(i);      
+        if (char >= 48 && char <= 57) {
+            containsDigit = true;
+        }
+        if (char >= 65 && char <= 90) {
+            containsUpper = true;
+        }
+        if (char >= 97 && char <= 122) {
+            containsLower = true;
+        }
+    }
+
     //check if old password matches current password
-    let userEmail = sessionStorage.getItem("email");
-    Customer.findOne(userEmail, function (err, customer) {
+    Customer.findOne({email: req.body.user}, function (err, customer) {
 
        if (err) {
            res.status(400).send(err);
@@ -34,34 +45,38 @@ router.post("/changePassword", function(req, res) {
            res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
        }
        else {
-            //check if new password is valid
+            //check if new password is the same as old password
             if(inNewPas == inOldPas) {
                 res.status(401).json({success: false, msg: "Old password is same as new password"});
             }
-            //else if(inNewPas != )
-            //if not send error
+            //check if old password matches current password
+            else if(!bcrypt.compareSync(inOldPas, customer.passwordHash)) {
+                res.status(201).json({ success: false, msg: "Current password does not match entered password" });
+            }
+            //check if new password fits password critera                
+            else if (inNewPas.length < 10 || inNewPas.length > 20) {
+                res.status(401).json({ success: false, msg: "Invalid new password, must be 10-20 characters long" });
+            }
+            else if (containsDigit != true) {
+                res.status(401).json({ success: false, msg: "Invalid new password, must contain digit" });
+            }
+            else if (containsLower != true) {
+                res.status(401).json({ success: false, msg: "Invalid new password, must contain lower case letter" });
+            }
+            else if (containsUpper != true) {
+                res.status(401).json({ success: false, msg: "Invalid new password, must contain upper case letter" });
+            }
             //change current password to new password
-        
-    //     if (bcrypt.compareSync(req.body.password, customer.passwordHash)) {
-    //            const token = jwt.encode({ email: customer.email }, secret);
-    //            //update user's last access time
-    //            customer.lastAccess = new Date();
-    //            customer.save((err, customer) => {
-    //                console.log("User's LastAccess has been update.");
-    //            });
-    //            // Send back a token that contains the user's username
-    //            res.status(201).json({ success: true, token: token, msg: "Login success" });
-    //        }
-    //        else {
-    //            res.status(401).json({ success: false, msg: "Email or password invalid." });
-    //        }
+            else {
+                const newPasswordHash = bcrypt.hashSync(inNewPas, 10);
+                customer.passwordHash = newPasswordHash;
+                res.status(201).json({success: true, msg: "Current password changed to the new password"});
+            }
         }
    });
-    */
 });
 
 /*
-
 router.post("/signUp", function (req, res) {
     let emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
 
