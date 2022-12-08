@@ -106,7 +106,7 @@ router.post("/logIn", function (req, res) {
        }
        else if (!customer) {
            // Username not in the database
-           res.status(401).json({ error: "Login failure!!" });
+           res.status(401).json({ error: "User email does not exist." });
        }
        else {
            if (bcrypt.compareSync(req.body.password, customer.passwordHash)) {

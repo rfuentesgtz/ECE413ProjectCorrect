@@ -46,6 +46,7 @@
             </tbody> 
           </table>
         </div>
+        <br/>
         <div>
           <div>
             <h4>Register a new device: </h4>
@@ -62,31 +63,86 @@
           <br/>
         </div>
         <br/>
-      <div>
-        <h2>Account Information:</h2>
-        <table class="account-table">
-          <tr>
-            <th>Email</th>
-            <td><p id="userEmail">temp name</p></td>
-          </tr>
-          <tr>
-            <th>Password</th>
-            <td>
-              <div>
-                <label for="old">Enter current password:</label>
-                <input type="text" id="old" placeholder="Current Password" name="old">
-              </div>
-              <div>
-                <label for="new">Enter new password:</label>
-                <input type="text" id="new" placeholder="New Password" name="new">
-              </div>
-              <button id="btnChangeP">Change Password</button></td>
-          </tr>
-        </table>
-        <div style="display:inline-block; width:45vw; height: 60vh; margin: 2vh 20vw; ">
-          <textarea id="rxData" style="width:100%; height:100%"></textarea>
-        </div> 
-      </div>
+        <div>
+          <h2>Configuration:</h2>
+          <table>
+            <tr>
+              <th>Frequency</th>
+              <td><p id="currFreq">temp frequency</p></td>
+              <td></td>
+              <td>
+                <div>
+                  <label for="freq">Enter new frequency:</label>
+                  <input type="text" id="freq" placeholder="Frequency Value" name="freq">
+                </div>
+              </td>
+              <td></td>
+              <td><button id="freqUpdate">Update Frequency</button></td>
+            </tr>
+            <tr>
+              <th>Start Time</th>
+              <td><p id="currStartHour"></p>temp start hour</td>
+              <td><p id="currStartMin"></p>temp start min</td>
+              <td>
+                <div>
+                  <label for="startHour">Enter new start hour:</label>
+                  <input type="text" id="startHour" placeholder="Hour Value" name="startHour">
+                </div>
+              </td>
+              <td>
+                <div>
+                  <label for="startMin">Enter new start minute:</label>
+                  <input type="text" id="startMin" placeholder="Minute Value" name="startMin">
+                </div>
+              </td>
+              <td><button id="startUpdate">Update Start Time</button></td>
+            </tr>
+            <tr>
+              <th>End Time</th>
+              <td><p id="currEndHour"></p>temp end hour</td>
+              <td><p id="currEndMin"></p>temp end min</td>
+              <td>
+                <div>
+                  <label for="endHour">Enter new end hour:</label>
+                  <input type="text" id="endHour" placeholder="Hour Value" name="endHour">
+                </div>
+              </td>
+              <td>
+                <div>
+                  <label for="endMin">Enter new end minute:</label>
+                  <input type="text" id="endMin" placeholder="Minute Value" name="endMin">
+                </div>
+              </td>
+              <td><button id="endUpdate">Update End Time</button></td>
+            </tr>
+          </table>
+        </div>
+        <br/>
+        <div>
+          <h2>Account Information:</h2>
+          <table class="account-table">
+            <tr>
+              <th>Email</th>
+              <td><p id="userEmail">temp name</p></td>
+            </tr>
+            <tr>
+              <th>Password</th>
+              <td>
+                <div>
+                  <label for="old">Enter current password:</label>
+                  <input type="text" id="old" placeholder="Current Password" name="old">
+                </div>
+                <div>
+                  <label for="new">Enter new password:</label>
+                  <input type="text" id="new" placeholder="New Password" name="new">
+                </div>
+                <button id="btnChangeP">Change Password</button></td>
+            </tr>
+          </table>
+          <div style="display:inline-block; width:45vw; height: 60vh; margin: 2vh 20vw; ">
+            <textarea id="rxData" style="width:100%; height:100%"></textarea>
+          </div> 
+        </div>
     
       <footer class="page-footer bg-az-red darken-2">
         <div class="footer-copyright">
