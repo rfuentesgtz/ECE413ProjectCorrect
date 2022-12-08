@@ -36,7 +36,6 @@ router.post("/changePassword", function(req, res) {
 
     //check if old password matches current password
     Customer.findOne({email: req.body.user}, function (err, customer) {
-
        if (err) {
            res.status(400).send(err);
        }
@@ -49,10 +48,12 @@ router.post("/changePassword", function(req, res) {
             if(inNewPas == inOldPas) {
                 res.status(401).json({success: false, msg: "Old password is same as new password"});
             }
+
             //check if old password matches current password
             else if(!bcrypt.compareSync(inOldPas, customer.passwordHash)) {
-                res.status(201).json({ success: false, msg: "Current password does not match entered password" });
+                res.status(401).json({ success: false, msg: "Current password does not match entered password" });
             }
+
             //check if new password fits password critera                
             else if (inNewPas.length < 10 || inNewPas.length > 20) {
                 res.status(401).json({ success: false, msg: "Invalid new password, must be 10-20 characters long" });
@@ -66,11 +67,18 @@ router.post("/changePassword", function(req, res) {
             else if (containsUpper != true) {
                 res.status(401).json({ success: false, msg: "Invalid new password, must contain upper case letter" });
             }
+
             //change current password to new password
             else {
                 const newPasswordHash = bcrypt.hashSync(inNewPas, 10);
-                customer.passwordHash = newPasswordHash;
-                res.status(201).json({success: true, msg: "Current password changed to the new password"});
+                Customer.findOneAndUpdate({ email: req.body.user}, {passwordHash: newPasswordHash}, function (err, customer) {
+                    if(err) {
+                        res.status(400).send(err);
+                    }
+                    else {
+                    res.status(201).json({success: true, msg: "Current password changed to the new password"});
+                    }
+                });
             }
         }
    });
