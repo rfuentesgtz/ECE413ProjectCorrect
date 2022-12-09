@@ -55,7 +55,7 @@ router.post('/publishBPM', function(req, res){
         console.log("Token verified!");
         let newBPMData = {
             BPM: parseInt(req.body.data.BPM),
-            timeData: new Date(parseInt(req.body.data.time) * 1000)
+            timeData: new Date(req.body.data.time * 1000)
         }
         console.log(newBPMData);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
