@@ -41,19 +41,42 @@ router.post('/refreshBPM', function(req, res){
     
 });
 
-router.post('/publishbpm', function(req, res){
-    if(req.body.data){
-       // document.getElementById("boardVal").value = req.body.data;
-        console.log("Data has been set");
-	    console.log(req.body.data);
-        messageStr = "Data set succesfullly";
-        res.status(201).json({message: messageStr});
+router.post('/publishBPM', function(req, res){
+    //Verify token works
+    if (!req.headers["x-auth"]) {
+        return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
     }
-
-    else {
-        console.log("DATA NOT SET");
-        messageStr = "Data not set";
-        res.status(402).json({message: messageStr});
+    
+    // X-Auth should contain the token 
+    const token = req.headers["x-auth"];
+    console.log("Verifying token...");
+    try {
+        const decoded = jwt.decode(token, secret);
+        console.log("Token verified!");
+        let newBPMData = {
+            BPM: parseInt(req.body.BPM),
+            timeData: new Date(parseInt(req.body.time) * 1000)
+        }
+        Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
+            if (err) {
+                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
+            }
+            else {
+                users.updateOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, {"$push": {BPMData: newBPMData}}, function (err, customer) {
+                    if (err) {
+                        res.status(400).send(err);
+                    }
+                    else {
+                        res.status(201).json({success: true, msg: "New BPM data added!"});
+                    }
+                });
+                
+            }
+        });
+    }
+    catch (ex) {
+        console.log("Invalid token!");
+        res.status(401).json({ success: false, message: "Invalid JWT" });
     }
 });
 
