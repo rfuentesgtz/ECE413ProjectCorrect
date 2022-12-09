@@ -159,7 +159,7 @@ function main() {
             return;
         }
         if ($('#id').val() === "") {
-            window.alert("Invalid new password");
+            window.alert("Invalid new id");
             return;
         }
 
