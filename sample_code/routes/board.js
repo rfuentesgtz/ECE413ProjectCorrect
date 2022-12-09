@@ -60,13 +60,8 @@ router.post('/bpmdata', function(req, res){
 router.post('/requesttoken', function(req, res){
     if(req.body.coreid){
         console.log("Checking if any user has added this device", req.body.coreid);
-
-        let testValue = {
-            deviceName: /[\s\S]*/,
-            deviceID: req.body.coreid
-        }
         
-        Customer.findOne({deviceID: req.body.coreid}, function (err, customer) {
+        Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, customer) {
             if (err) {
                 res.status(400).send(err);
             }
