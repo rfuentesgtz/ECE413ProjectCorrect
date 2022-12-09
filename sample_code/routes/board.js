@@ -54,12 +54,17 @@ router.post('/publishBPM', function(req, res){
         const decoded = jwt.decode(token, secret);
         console.log("Token verified!");
         let newBPMData = {
-            BPM: parseInt(req.body.BPM),
-            timeData: new Date(parseInt(req.body.time) * 1000)
+            BPM: parseInt(req.body.data.BPM),
+            timeData: new Date(parseInt(req.body.data.time) * 1000)
         }
+        console.log()
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
+            }
+            else if (!users){
+                console.log("error message that shouldnt happen");
+                res.status(400).json({ success: false, message: "No user was found!" });
             }
             else {
                 users.updateOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, {"$push": {BPMData: newBPMData}}, function (err, customer) {
