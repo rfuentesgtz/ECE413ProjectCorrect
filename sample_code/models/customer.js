@@ -20,7 +20,7 @@ const customerSchema = new db.Schema({
     endHour: { type: Number, min: 0, max: 23, default: 20 },
     endMinute: { type: Number, min: 0, max: 59, default: 0 },
     devices: [deviceSchema],
-    BMPData: [bpmSchema]
+    BPMData: [bpmSchema]
  });
 
 

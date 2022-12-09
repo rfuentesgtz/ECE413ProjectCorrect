@@ -26,7 +26,7 @@ router.post("/changeFreq", function(req, res) {
         else if (isNaN(inFreq)) { //check if number
             res.status(401).json({success: false, error: "Frequency value is not a number." });
         }
-        else if (!(inFreq > 5 && inFreq < 480)) { //min: 5, max: 480
+        else if (!(inFreq >= 5 && inFreq <= 480)) { //min: 5, max: 480
             res.status(401).json({success: false, error: "Frequency value not in range." });
         }
         else if (inFreq % 1 != 0) { //must be a whole number
@@ -68,7 +68,7 @@ router.post("/changeStart", function(req, res) {
             res.status(401).json({success: false, error: "Input minute is not a whole number." });
         }
         else {
-            Customer.updateOne({ email: req.body.user}, {startHour: inHour, startMin: inMin}, function (err, customer) {
+            Customer.updateOne({ email: req.body.user}, {startHour: inHour, startMinute: inMin}, function (err, customer) {
                 if (err) {
                     res.status(400).send(err);
                 }
@@ -81,6 +81,98 @@ router.post("/changeStart", function(req, res) {
 });
 
 //changing end time
+router.post("/changeEnd", function(req, res) {
+    inHour = req.body.eHour;
+    inMin = req.body.eMin;
+
+    Customer.findOne({email: req.body.user}, function (err, customer) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else if (!customer) {   // Username not in the database
+           res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
+        }
+        else if (isNaN(inHour) || isNaN(inHour)) { //check if number
+            res.status(401).json({success: false, error: "Input time is not a number." });
+        }
+        else if (!(inHour >= 0 && inHour <= 23)) { //check in range
+            res.status(401).json({success: false, error: "Input time is not in hour range." });
+        }
+        else if (!(inMin >= 0 && inMin <= 59)) { //check in range
+            res.status(401).json({success: false, error: "Input time is not in minute range." });
+        }
+        else if (inHour % 1 != 0) { //must be a whole number
+            res.status(401).json({success: false, error: "Input hour is not a whole number." });
+        }
+        else if (inMin % 1 != 0) { //must be a whole number
+            res.status(401).json({success: false, error: "Input minute is not a whole number." });
+        }
+        else {
+            Customer.updateOne({ email: req.body.user}, {endHour: inHour, endMinute: inMin}, function (err, customer) {
+                if (err) {
+                    res.status(400).send(err);
+                }
+                else {
+                    res.status(201).json({success: true, msg: "End time updated"});
+                }
+            });
+        }
+   });
+});
+
+//ADD A NEW DEVICE
+router.post("/newDevice", function(req, res) {
+    let newDeviceData = {
+        deviceName: req.body.newName,
+        deviceID: req.body.newID
+    }
+    
+    Customer.findOne({email: req.body.user}, function (err, customer) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else if (!customer) {   // Username not in the database
+           res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
+        }
+        else {
+            Customer.updateOne({ email: req.body.user}, {"$push": {devices: newDeviceData}}, function (err, customer) {
+                if (err) {
+                    res.status(400).send(err);
+                }
+                else {
+                    res.status(201).json({success: true, msg: "New device added"});
+                }
+            });
+        }
+   });
+});
+
+//DELETE A DEVICE
+router.post("/deleteDevice", function(req, res) {
+    let deviceData = {
+        deviceName: req.body.deviceName,
+        deviceID: req.body.deviceID
+    }
+    
+    Customer.findOne({email: req.body.user}, function (err, customer) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else if (!customer) {   // Username not in the database
+           res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
+        }
+        else {
+            Customer.updateOne({ email: req.body.user}, {"$pull": {devices: deviceData}}, function (err, customer) {
+                if (err) {
+                    res.status(400).send(err);
+                }
+                else {
+                    res.status(201).json({success: true, msg: "Device deleted!"});
+                }
+            });
+        }
+   });
+});
 
 //changing password
 router.post("/changePassword", function(req, res) {

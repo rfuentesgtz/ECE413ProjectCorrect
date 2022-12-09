@@ -1,28 +1,44 @@
 var express = require('express');
 var router = express.Router();
+var Customer = require("../models/customer");
 const jwt = require("jwt-simple");
-//const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const fs = require('fs');
+
+// On AWS ec2, you can use to store the secret in a separate file. 
+// The file should be stored outside of your code directory. 
+// For encoding/decoding JWT
 const secret = fs.readFileSync(__dirname + '/../keys/jwtkey').toString();
 
 
 // CRUD implementation
 
 router.post('/workinghours', function(req, res){
-    startHour = Math.floor(Math.random() * 24);
-    endHour = Math.floor(Math.random() * 24);
-    startMinute = Math.floor(Math.random() * 60);
-    endMinute = Math.floor(Math.random() * 60);
-
-    const returnTimes = {
-        startH: startHour, 
-        startM: startMinute, 
-        endH: endHour, 
-        endM : endMinute
+    //Verify token works
+    if (!req.headers["x-auth"]) {
+        return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
     }
-
-    console.log(returnTimes);
-    res.status(201).json(returnTimes);
+    
+    // X-Auth should contain the token 
+    const token = req.headers["x-auth"];
+    console.log("Verifying token...");
+    try {
+        const decoded = jwt.decode(token, secret);
+        console.log("Token verified!");
+        Customer.findOne({ deviceID: decoded.deviceid }, "measurementFrequency startHour startMinute endHour endMinute", function (err, users) {
+            if (err) {
+                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
+            }
+            else {
+                res.status(200).json(users);
+            }
+        });
+    }
+    catch (ex) {
+        console.log("Invalid token!");
+        res.status(401).json({ success: false, message: "Invalid JWT" });
+    }
+    
 });
 
 router.post('/bpmdata', function(req, res){
@@ -35,7 +51,7 @@ router.post('/bpmdata', function(req, res){
     }
 
     else {
-        console.log("Incorrect JSON format");
+        console.log("DATA NOT SET");
         messageStr = "Data not set";
         res.status(402).json({message: messageStr});
     }
