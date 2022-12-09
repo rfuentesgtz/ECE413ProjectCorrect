@@ -5,37 +5,52 @@ function main() {
     let emailName = document.getElementById("userEmail");
     emailName.innerText = sessionStorage.getItem("email");
     
-    //let freqVal = document.getElementById("currFreq");
+    $(function() {
+        let txdata = {
+            user: sessionStorage.getItem("email")
+        }
+        $.ajax({
+            url: '/customers/status',
+            method: 'GET',
+            headers: { 'x-auth' : window.localStorage.getItem("token") },
+            dataType: 'json'
+        })
+        .done(function (data, textStatus, jqXHR) {
+            $('#currFreq').html(JSON.stringify(data, null, 2));
+            $('#currStartHour').html(JSON.stringify(data, null, 2));
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            window.location.replace("display.html");
+        });
+    });
 
-    // let requestData = {email: sessionStorage.getItem("email")};
-    // $.get("customer.js", requestData, function(data) {
-    //     freqVal.innerText = data.passwordHash;
-    // });
+    //change frequency
+    function changefreq() {
+        if ($('#freq').val() === "") {
+            window.alert("Invalid frequency");
+            return;
+        }
 
-    // function updatevisual() {
-    //     let txdata = {
-    //         user: sessionStorage.getItem("email")
-    //     }
-    //     $.ajax({
-    //         url: '/settings/updateVisual',
-    //         method: 'GET',
-    //         contentType: 'application/json',
-    //         data: JSON.stringify(txdata),
-    //         dataType: 'json'
-    //     })
-    //     .done(function (data, textStatus, jqXHR) {
-    //         $('#rxData').html(JSON.stringify(data, null, 2));
-    //     })
-    //     .fail(function (jqXHR, textStatus, errorThrown) {
-    //         $('#rxData').html(JSON.stringify(jqXHR, null, 2));
-    //     });
-    // }
-    
-        //freqVal.innerText = "hihihi";
-    //put freq, start time, end time on page
-    
+        let txdata = {
+            freq: $('#freq').val(),
+            user: sessionStorage.getItem("email")
+        };
 
-    
+        $.ajax({
+            url: '/settings/changePassword',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(txdata),
+            dataType: 'json'
+        })
+        .done(function (data, textStatus, jqXHR) {
+            $('#rxData').html(JSON.stringify(data, null, 2));
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+        });
+    }
+
 
     //change password
     function changepassword() {
@@ -72,4 +87,7 @@ function main() {
     $(function () {
         $('#btnChangeP').click(changepassword);
     });
+    $(function() {
+        $('freqUpdate').click(changefreq);
+    })
 }
