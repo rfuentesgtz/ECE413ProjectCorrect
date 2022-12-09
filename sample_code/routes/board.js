@@ -57,7 +57,7 @@ router.post('/publishBPM', function(req, res){
             BPM: parseInt(req.body.data.BPM),
             timeData: new Date(parseInt(req.body.data.time) * 1000)
         }
-        console.log()
+        console.log(newBPMData);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
@@ -67,7 +67,7 @@ router.post('/publishBPM', function(req, res){
                 res.status(400).json({ success: false, message: "No user was found!" });
             }
             else {
-                users.updateOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, {"$push": {BPMData: newBPMData}}, function (err, customer) {
+                Customer.updateOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, {"$push": {BPMData: newBPMData}}, function (err, customer) {
                     if (err) {
                         res.status(400).send(err);
                     }
