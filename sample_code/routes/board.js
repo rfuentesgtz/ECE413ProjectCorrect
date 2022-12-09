@@ -78,6 +78,7 @@ router.post('/requesttoken', function(req, res){
                 console.log("Customer found!", customer.devices);
                 res.status(201).json({ success: true, token: token, msg: "Token generation success!" });
             }
+            console.log(customer);
         });
     }
 
