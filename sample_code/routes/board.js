@@ -59,14 +59,25 @@ router.post('/bpmdata', function(req, res){
 
 router.post('/requesttoken', function(req, res){
     if(req.body.coreid){
-        console.log("Token will be sent to ID:", req.body.coreid);
-        const token = jwt.encode({ deviceid: req.body.coreid }, secret);
-        //console.log(token);
-        res.status(201).json({ success: true, token: token, msg: "Login success" });
+        console.log("Checking if any user has added this device", req.body.coreid);
+        
+        Customer.findOne({deviceID: coreid}, function (err, customer) {
+            if (err) {
+                res.status(400).send(err);
+            }
+            else if (!customer) {   // Username not in the database
+               res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
+            }
+            else {
+                const token = jwt.encode({ deviceid: req.body.coreid }, secret);
+                console.log("Customer found!");
+                res.status(201).json({ success: true, token: token, msg: "Token generation success!" });
+            }
+        });
     }
 
     else {
-        console.log("No id found");
+        console.log("No id found was given.");
         res.status(400);
     }
 })
