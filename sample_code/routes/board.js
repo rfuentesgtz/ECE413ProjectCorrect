@@ -57,7 +57,7 @@ router.post('/publishBPM', function(req, res){
             BPM: parseInt(req.body.data.BPM),
             timeData: new Date(req.body.data.time * 1000)
         }
-        console.log(newBPMData);
+        console.log(req.body);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
