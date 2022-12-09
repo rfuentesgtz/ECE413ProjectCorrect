@@ -66,7 +66,7 @@ router.post('/requesttoken', function(req, res){
             deviceID: req.body.coreid
         }
         
-        Customer.findOne({devices: req.body.coreid}, function (err, customer) {
+        Customer.findOne({deviceID: req.body.coreid}, function (err, customer) {
             if (err) {
                 res.status(400).send(err);
             }
