@@ -60,13 +60,18 @@ router.post('/bpmdata', function(req, res){
 router.post('/requesttoken', function(req, res){
     if(req.body.coreid){
         console.log("Checking if any user has added this device", req.body.coreid);
+
+        let testValue = {
+            deviceName: /[\s\S]*/,
+            deviceID: req.body.coreid
+        }
         
-        Customer.findOne({devices: req.body.coreid}, function (err, customer) {
+        Customer.findOne({devices: testValue}, function (err, customer) {
             if (err) {
                 res.status(400).send(err);
             }
             else if (!customer) {   // Username not in the database
-               res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
+               res.status(401).json({success: false, error: "This device is not registered by any customer" });
             }
             else {
                 const token = jwt.encode({ deviceid: req.body.coreid }, secret);
