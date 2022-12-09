@@ -144,7 +144,7 @@ router.get("/status", function (req, res) {
    try {
        const decoded = jwt.decode(token, secret);
        // Send back email and last access
-       Customer.find({ email: decoded.email }, "email lastAccess", function (err, users) {
+       Customer.find({ email: decoded.email }, "email lastAccess measurementFrequency startHour startMinute endHour endMinute devices BPMData", function (err, users) {
            if (err) {
                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
            }
