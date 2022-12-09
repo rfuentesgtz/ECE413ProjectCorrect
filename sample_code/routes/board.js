@@ -70,7 +70,7 @@ router.post('/requesttoken', function(req, res){
             }
             else {
                 const token = jwt.encode({ deviceid: req.body.coreid }, secret);
-                console.log("Customer found!");
+                console.log("Customer found!", customer.devices);
                 res.status(201).json({ success: true, token: token, msg: "Token generation success!" });
             }
         });
