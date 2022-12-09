@@ -120,7 +120,7 @@ router.post("/logIn", function (req, res) {
                res.status(201).json({ success: true, token: token, msg: "Login success" });
            }
            else {
-               res.status(401).json({ success: false, msg: "Email or password invalid." });
+               res.status(401).json({ success: false, error: "Email or password invalid." });
            }
        }
    });

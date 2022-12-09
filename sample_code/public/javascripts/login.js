@@ -18,7 +18,7 @@ function login() {
         window.location.replace("account.html");
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-        //$('#errorMsg').html(data);
+        $('#errorMsg').html(errorThrown);
         //$('#rxData').html(jqXHR.msg);
         $('#rxData').html(JSON.stringify(jqXHR, null, 2));
     });
