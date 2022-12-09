@@ -61,7 +61,7 @@ router.post('/requesttoken', function(req, res){
     if(req.body.coreid){
         console.log("Checking if any user has added this device", req.body.coreid);
         
-        Customer.findOne({deviceID: req.body.coreid}, function (err, customer) {
+        Customer.findOne({devices: req.body.coreid}, function (err, customer) {
             if (err) {
                 res.status(400).send(err);
             }
