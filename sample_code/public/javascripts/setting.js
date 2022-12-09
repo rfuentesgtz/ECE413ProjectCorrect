@@ -146,6 +146,7 @@ function main() {
         })
         .done(function (data, textStatus, jqXHR) {
             $('#rxData').html(JSON.stringify(data, null, 2));
+            window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $('#rxData').html(JSON.stringify(jqXHR, null, 2));
