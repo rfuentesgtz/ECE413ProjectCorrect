@@ -37,9 +37,9 @@ function signup() {
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 404) {
-            $('#rxData').html("Server could not be reached!!!");    
+            $('#errorMsg').html("Server could not be reached!!!");    
         }
-        else $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+        else $('#errorMsg').html(jqXHR.responseJSON.msg);
     });
 }
 

@@ -10,6 +10,7 @@ const bpmSchema = new db.Schema({
     timeData: Date
 });
 
+//Customer schema, allows for each customer to have save their settings, as well as an array of devices and BPM data
 const customerSchema = new db.Schema({
     email:      String,
     passwordHash:   String,

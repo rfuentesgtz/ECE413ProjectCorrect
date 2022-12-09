@@ -12,15 +12,14 @@ function login() {
         data: JSON.stringify(txdata),
         dataType: 'json'
     })
-    .done(function (data, textStatus, jqXHR) {
+    .done(function (data, textStatus, jqXHR) {      //when user has entered a valid email and password, their email will be stored and they will be given a token
         sessionStorage.setItem("email", $('#email').val());
         localStorage.setItem("token", data.token);
         window.location.replace("account.html");
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-        $('#errorMsg').html(errorThrown);
-        //$('#rxData').html(jqXHR.msg);
-        $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+        $('#errorMsg').html(jqXHR.responseJSON.error);           //display error message when they enter the wrong email or username
+        //$('#rxData').html(JSON.stringify(jqXHR, null, 2));
     });
 }
 

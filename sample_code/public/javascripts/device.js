@@ -10,7 +10,7 @@ function device() {
     };
 
     $.ajax({
-        url: '/customers/device', //does this work?
+        url: '/customers/device',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(txdata),
