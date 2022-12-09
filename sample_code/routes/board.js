@@ -13,7 +13,7 @@ const secret = fs.readFileSync(__dirname + '/../keys/jwtkey').toString();
 
 // CRUD implementation
 
-router.post('/workinghours', function(req, res){
+router.post('/refreshBPM', function(req, res){
     //Verify token works
     if (!req.headers["x-auth"]) {
         return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
@@ -25,7 +25,7 @@ router.post('/workinghours', function(req, res){
     try {
         const decoded = jwt.decode(token, secret);
         console.log("Token verified!");
-        Customer.findOne({ deviceID: decoded.deviceid }, "measurementFrequency startHour startMinute endHour endMinute", function (err, users) {
+        Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, "measurementFrequency startHour startMinute endHour endMinute", function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
             }
@@ -41,7 +41,7 @@ router.post('/workinghours', function(req, res){
     
 });
 
-router.post('/bpmdata', function(req, res){
+router.post('/publishbpm', function(req, res){
     if(req.body.data){
        // document.getElementById("boardVal").value = req.body.data;
         console.log("Data has been set");
