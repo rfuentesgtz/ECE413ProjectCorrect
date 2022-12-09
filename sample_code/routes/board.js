@@ -21,10 +21,10 @@ router.post('/refreshBPM', function(req, res){
     
     // X-Auth should contain the token 
     const token = req.headers["x-auth"];
-    console.log("Verifying token...");
+    //console.log("Verifying token...");
     try {
         const decoded = jwt.decode(token, secret);
-        console.log("Token verified!");
+        //console.log("Token verified!");
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, "measurementFrequency startHour startMinute endHour endMinute", function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
@@ -35,7 +35,7 @@ router.post('/refreshBPM', function(req, res){
         });
     }
     catch (ex) {
-        console.log("Invalid token!");
+        //console.log("Invalid token!");
         res.status(401).json({ success: false, message: "Invalid JWT" });
     }
     
@@ -88,7 +88,7 @@ router.post('/publishBPM', function(req, res){
 
 router.post('/requesttoken', function(req, res){
     if(req.body.coreid){
-        console.log("Checking if any user has added this device", req.body.coreid);
+        //console.log("Checking if any user has added this device", req.body.coreid);
         
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, customer) {
             if (err) {
@@ -99,10 +99,10 @@ router.post('/requesttoken', function(req, res){
             }
             else {
                 const token = jwt.encode({ deviceid: req.body.coreid }, secret);
-                console.log("Customer found!", customer.devices);
+                //console.log("Customer found!", customer.devices);
                 res.status(201).json({ success: true, token: token, msg: "Token generation success!" });
             }
-            console.log(customer);
+            //console.log(customer);
         });
     }
 
@@ -120,10 +120,10 @@ router.post('/verifytoken', function (req, res){
 
     // X-Auth should contain the token 
     const token = req.headers["x-auth"];
-    console.log("Verifying token...");
+    //console.log("Verifying token...");
     try {
         const decoded = jwt.decode(token, secret);
-        console.log("Token verified!");
+        //console.log("Token verified!");
         res.status(201).json({ success: true, msg: "Token verified!" });
     }
     catch (ex) {
