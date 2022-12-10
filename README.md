@@ -17,7 +17,7 @@ Links to your server
 
 
 The pitch
-    It is important to keep track of your health! With our website, you will be able to connect your device 
+    It is important to keep track of your health! With our website, you will be able to connect your device and see the live updates. 
 
 
 Demonstration videos
