@@ -3,7 +3,7 @@
   
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-  var root = am5.Root.new("chartdiv");
+  var root = am5.Root.new("chartBPM");
   
   
   // Set themes
@@ -43,7 +43,7 @@
     };
   }
   
-  // Edit here to receive argon data
+  //Edit here to receive argon data
   function generateDatas(count) {
     var data = [];
     for (var i = 0; i < count; ++i) {
@@ -91,7 +91,7 @@
     orientation: "horizontal"
   }));
   
-  var data = generateDatas(100);
+  var data = generateData();
   series.data.setAll(data);
   
   

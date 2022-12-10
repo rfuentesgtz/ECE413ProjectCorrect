@@ -18,18 +18,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-  #chartdiv {
-    width: 100%;
-    height: 500px;
-  }
-  </style>
   <!-- Resources -->
   <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
   <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script> 
   <script src="javascripts/account.js"></script>
   <script src="javascripts/charts.js"></script>
+  <script src="javascripts/charts2.js"></script>
+  <link href="stylesheets/charts.css" rel="stylesheet">
 </head>
 <body>
     <!-- <nav class="nav-wrapper bg-az-blue lighten-4" role="navigation">
@@ -52,13 +48,68 @@
   
     <div class="container">
         <div>
-        <h2>Current Device</h2>
+        <h2>Weekly Summary</h2>
+        <table id="table1" style="border: black solid;">
+          <tr>
+          <th>Date</th>
+          <th>Minimum Reading</th>
+          <th>Maximum Reading</th>
+          <th>Average Reading</th>
+          </tr>
+          <tr>
+            <td>Past Week</td>
+            <td id="weekMin"></td>
+            <td id="weekMax"></td>
+            <td id="weekAvg"></td>
+          </tr>
+          <tr>
+            <td id="day1"></td>
+            <td id="day1Min"></td>
+            <td id="day1Max"></td>
+            <td id="day1Avg"></td>
+          </tr>
+          <tr>
+            <td id="day2"></td>
+            <td id="day2Min"></td>
+            <td id="day2Max"></td>
+            <td id="day2Avg"></td>
+          </tr>
+          <tr>
+            <td id="day3"></td>
+            <td id="day3Min"></td>
+            <td id="day3Max"></td>
+            <td id="day3Avg"></td>
+          </tr>
+          <tr>
+            <td id="day4"></td>
+            <td id="day4Min"></td>
+            <td id="day4Max"></td>
+            <td id="day4Avg"></td>
+          </tr>
+          <tr>
+            <td id="day5"></td>
+            <td id="day5Min"></td>
+            <td id="day5Max"></td>
+            <td id="day5Avg"></td>
+          </tr>
+          <tr>
+            <td id="day6"></td>
+            <td id="day6Min"></td>
+            <td id="day6Max"></td>
+            <td id="day6Avg"></td>
+          </tr>
+          <tr>
+            <td id="day7"></td>
+            <td id="day7Min"></td>
+            <td id="day7Max"></td>
+            <td id="day7Avg"></td>
+          </tr>
+        </table>
+          <h4>Heart Rate</h4>
+          <div id="chartBPM"></div>
+          <h4>Oxygen</h4>
+          <div id="chartOxygen"></div>
         </div>
-        <div>
-        <h2>Past Week Summary</h2>
-  <div id="chartdiv"></div>
-        </div>
-
     </div>
     
     <footer class="page-footer bg-az-red darken-2">
