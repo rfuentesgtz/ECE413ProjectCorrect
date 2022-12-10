@@ -10,12 +10,11 @@ const fs = require('fs');
 // For encoding/decoding JWT
 const secret = fs.readFileSync(__dirname + '/../keys/jwtkey').toString();
 
-//adding new device
-
 //change freq
 router.post("/changeFreq", function(req, res) {
     inFreq = req.body.freq;
 
+    //find the user that is trying to change their frequency value
     Customer.findOne({email: req.body.user}, function (err, customer) {
         if (err) {
             res.status(400).send(err);
@@ -32,9 +31,14 @@ router.post("/changeFreq", function(req, res) {
         else if (inFreq % 1 != 0) { //must be a whole number
             res.status(401).json({success: false, error: "Frequency value not a whole number." });
         }
-        else {
+        else { //update the users frequency value
             Customer.updateOne({ email: req.body.user}, {measurementFrequency: inFreq}, function (err, customer) {
-                res.status(201).json({success: true, msg: "Frequency updated"});
+                if (err) {
+                    res.status(400).send(err);
+                }
+                else {
+                    res.status(201).json({success: true, msg: "Frequency updated"});
+                }
             });
         }
    });
@@ -45,6 +49,7 @@ router.post("/changeStart", function(req, res) {
     inHour = req.body.sHour;
     inMin = req.body.sMin;
 
+    //find the user that is trying to change their start time
     Customer.findOne({email: req.body.user}, function (err, customer) {
         if (err) {
             res.status(400).send(err);
@@ -67,7 +72,7 @@ router.post("/changeStart", function(req, res) {
         else if (inMin % 1 != 0) { //must be a whole number
             res.status(401).json({success: false, error: "Input minute is not a whole number." });
         }
-        else {
+        else { //update users start time
             Customer.updateOne({ email: req.body.user}, {startHour: inHour, startMinute: inMin}, function (err, customer) {
                 if (err) {
                     res.status(400).send(err);
@@ -85,6 +90,7 @@ router.post("/changeEnd", function(req, res) {
     inHour = req.body.eHour;
     inMin = req.body.eMin;
 
+    //find the user that is trying to change their end time
     Customer.findOne({email: req.body.user}, function (err, customer) {
         if (err) {
             res.status(400).send(err);
@@ -107,7 +113,7 @@ router.post("/changeEnd", function(req, res) {
         else if (inMin % 1 != 0) { //must be a whole number
             res.status(401).json({success: false, error: "Input minute is not a whole number." });
         }
-        else {
+        else { //update users end time
             Customer.updateOne({ email: req.body.user}, {endHour: inHour, endMinute: inMin}, function (err, customer) {
                 if (err) {
                     res.status(400).send(err);
@@ -127,6 +133,7 @@ router.post("/newDevice", function(req, res) {
         deviceID: req.body.newID
     }
     
+    //find user that is trying to add a new device
     Customer.findOne({email: req.body.user}, function (err, customer) {
         if (err) {
             res.status(400).send(err);
@@ -134,7 +141,7 @@ router.post("/newDevice", function(req, res) {
         else if (!customer) {   // Username not in the database
            res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
         }
-        else {
+        else {  //update the users device array
             Customer.updateOne({ email: req.body.user}, {"$push": {devices: newDeviceData}}, function (err, customer) {
                 if (err) {
                     res.status(400).send(err);
@@ -154,6 +161,7 @@ router.post("/deleteDevice", function(req, res) {
         deviceID: req.body.deviceID
     }
     
+    //find user that is trying to delete a device
     Customer.findOne({email: req.body.user}, function (err, customer) {
         if (err) {
             res.status(400).send(err);
@@ -161,7 +169,7 @@ router.post("/deleteDevice", function(req, res) {
         else if (!customer) {   // Username not in the database
            res.status(401).json({success: false, error: "Somehow you are logged in but not in the database." });
         }
-        else {
+        else {  //update the users device array
             Customer.updateOne({ email: req.body.user}, {"$pull": {devices: deviceData}}, function (err, customer) {
                 if (err) {
                     res.status(400).send(err);
@@ -183,7 +191,7 @@ router.post("/changePassword", function(req, res) {
     let containsDigit = false;
     let containsUpper = false;
     let containsLower = false;
-    for (let i = 0; i < inNewPas.length; i++) {
+    for (let i = 0; i < inNewPas.length; i++) { //check if the new password follows the password requirments
         let char = inNewPas.charCodeAt(i);      
         if (char >= 48 && char <= 57) {
             containsDigit = true;
@@ -196,7 +204,7 @@ router.post("/changePassword", function(req, res) {
         }
     }
 
-    //check if old password matches current password
+    //find user that is trying to change their password
     Customer.findOne({email: req.body.user}, function (err, customer) {
        if (err) {
            res.status(400).send(err);
@@ -232,7 +240,9 @@ router.post("/changePassword", function(req, res) {
 
             //change current password to new password
             else {
+                //encrypt new password
                 const newPasswordHash = bcrypt.hashSync(inNewPas, 10);
+                //find user and update their passwordHash to the new value
                 Customer.updateOne({ email: req.body.user}, {passwordHash: newPasswordHash}, function (err, customer) {
                     res.status(201).json({success: true, msg: "Current password changed to the new password"});
                 });
