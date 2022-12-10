@@ -1,21 +1,15 @@
-/* .nav-wrapper ol{
-    list-style-type: none;
-} */
-
-/* .link-list {
-    display:table;
-} */
-
- /* ol > li {
+/* nav{
+    background-color: rgb(13, 36, 75);
+    width: 24%;
+    text-align: center;
     display: inline-block;
-    justify-content: center;
-} */
-
-/*
-.brand-logo {
-    vertical-align: middle;
-} */
-/* .link-list a::after{
-    display:block;
-    padding: 0 3px;
+    flex-direction: row;
+}
+a {
+    width: 70%;
+    height:70%;
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 20pt;
 } */
