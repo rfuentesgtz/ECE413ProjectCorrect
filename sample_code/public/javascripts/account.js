@@ -10,7 +10,7 @@ $(function (){
         dataType: 'json'
     })
     .done(function (data, textStatus, jqXHR) {
-
+        //data[0].BPMData
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");

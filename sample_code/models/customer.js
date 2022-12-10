@@ -10,7 +10,12 @@ const bpmSchema = new db.Schema({
     timeData: Date
 });
 
-//Customer schema, allows for each customer to have save their settings, as well as an array of devices and BPM data
+const oxSchema = new db.Schema({
+    oxEntry: Number,
+    timeData: Date
+});
+
+//Customer schema, allows for each customer to have save their settings, as well as an array of devices, BPM data, and Oxygen data
 const customerSchema = new db.Schema({
     email:      String,
     passwordHash:   String,
@@ -21,9 +26,9 @@ const customerSchema = new db.Schema({
     endHour: { type: Number, min: 0, max: 23, default: 20 },
     endMinute: { type: Number, min: 0, max: 59, default: 0 },
     devices: [deviceSchema],
-    BPMData: [bpmSchema]
+    BPMData: [bpmSchema],
+    OXData: [oxSchema]
  });
-
 
 const Customer = db.model("Customer", customerSchema);
 
