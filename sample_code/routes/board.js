@@ -53,9 +53,16 @@ router.post('/publishBPM', function(req, res){
     try {
         const decoded = jwt.decode(token, secret);
         console.log("Token verified!");
-        console.log(JSON.stringify(req.body.data));
+        tempValues = JSON.stringify(req.body.data);
+        newBPMData = {
+            bpmEntry: tempValues.HeartBeat,
+            timeData: Date(parseInt(tempValues.time))
+        }
         //console.log(req.body);
-        console.log("New BPM data");
+        console.log(tempValues);
+        console.log(req.body.data.HeartBeat);
+        console.log(tempValues.time);
+        //console
         //console.log(newBPMData.BPM, newBPMData.time);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
