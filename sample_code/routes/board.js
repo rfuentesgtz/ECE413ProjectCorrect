@@ -60,7 +60,7 @@ router.post('/publishBPM', function(req, res){
         }
         //console.log(req.body);
         console.log(tempValues);
-        console.log(tempValues.HeartBeat);
+        console.log(req.body.data.HeartBeat);
         console.log(tempValues.time);
         //console
         //console.log(newBPMData.BPM, newBPMData.time);
