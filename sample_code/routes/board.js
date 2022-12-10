@@ -55,7 +55,8 @@ router.post('/publishBPM', function(req, res){
         console.log("Token verified!");
         let newBPMData = JSON.parse(req.body);
         //console.log(req.body);
-        console.log(newBPMData.BPM, newBPMData.time);
+        console.log("New BPM data");
+        //console.log(newBPMData.BPM, newBPMData.time);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
@@ -66,6 +67,7 @@ router.post('/publishBPM', function(req, res){
             }
             else {
                 Customer.updateOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, {"$push": {BPMData: newBPMData}}, function (err, customer) {
+                    console.log("Attempting to save data");
                     if (err) {
                         res.status(400).send(err);
                     }
