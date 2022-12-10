@@ -61,6 +61,8 @@ router.post('/publishBPM', function(req, res){
         //console.log(req.body);
         console.log(tempValues);
         console.log(tempValues.HeartBeat);
+        console.log(tempValues.time);
+        //console
         //console.log(newBPMData.BPM, newBPMData.time);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
