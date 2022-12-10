@@ -34,6 +34,9 @@ $(function (){
         i++;
         }
         average = total / i;
+        alert(min);
+        alert(max);
+        alert(average);
         $("#weekMin").html(min);
         $("#weekMax").html(max);
         $("#weekAvg").html(average);
@@ -104,22 +107,25 @@ $(function (){
                   color2.push('rgba(204,204,204,1)');
               }
           }
-          var trace1 = {
-              x: arr2,
-              y: arr1,
-              marker:{
-                color: color2
-              },
-              type: 'bar'
-            };
+          alert(min);
+        alert(max);
+        alert(average);
+        //   var trace1 = {
+        //       x: arr2,
+        //       y: arr1,
+        //       marker:{
+        //         color: color2
+        //       },
+        //       type: 'bar'
+        //     };
             
-            var data = [trace1];
+        //     var data = [trace1];
             
-            var layout = {
-              title: 'Heart Rate'
-            };
+        //     var layout = {
+        //       title: 'Heart Rate'
+        //     };
             
-            Plotly.newPlot('myDiv2', data, layout);
+        //     Plotly.newPlot('myDiv2', data, layout);
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");
