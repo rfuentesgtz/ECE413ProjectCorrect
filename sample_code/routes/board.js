@@ -53,20 +53,13 @@ router.post('/publishBPM', function(req, res){
     try {
         const decoded = jwt.decode(token, secret);
         console.log("Token verified!");
-        tempValues = JSON.stringify(req.body.data);
-
-        sampleJSON = JSON.parse(tempValues);
+        BPMDataPoint = req.body.data;
+        timestamp = req.body.published_at;
 
         newBPMData = {
-            bpmEntry: sampleJSON.HeartBeat,
-            timeData: Date(parseInt(sampleJSON.time))
+            bpmEntry: Number(BPMDataPoint),
+            timeData: Date(timestamp)
         }
-        //console.log(req.body);
-        console.log(tempValues);
-        console.log(req.body.data.HeartBeat);
-        console.log(tempValues.time);
-        //console
-        //console.log(newBPMData.BPM, newBPMData.time);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
