@@ -56,7 +56,7 @@ router.post('/publishBPM', function(req, res){
         tempValues = JSON.stringify(req.body.data);
         newBPMData = {
             BPM: tempValues.BPM,
-            timeData: new Date(tempValues.time)
+            timeData: Date(parseInt(tempValues.time))
         }
         //console.log(req.body);
         console.log("New BPM data");
