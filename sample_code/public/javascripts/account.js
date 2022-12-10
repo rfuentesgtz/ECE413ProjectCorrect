@@ -37,9 +37,9 @@ $(function (){
         alert(min);
         alert(max);
         alert(average);
-        $("#weekMin").html(min);
-        $("#weekMax").html(max);
-        $("#weekAvg").html(average);
+        $("#weekMin").html(min + '');
+        $("#weekMax").html(max + '');
+        $("#weekAvg").html(average + '');
         var k = 0;
         var color2 = [];
         while(k < i){
@@ -54,6 +54,9 @@ $(function (){
             }
             k++;
         }
+        alert(arr1);
+        alert(arr2);
+        alert(color2);
         var trace1 = {
             x: arr2,
             y: arr1,
@@ -112,22 +115,22 @@ $(function (){
           alert(min);
         alert(max);
         alert(average);
-        //   var trace1 = {
-        //       x: arr2,
-        //       y: arr1,
-        //       marker:{
-        //         color: color2
-        //       },
-        //       type: 'bar'
-        //     };
+          var trace2 = {
+              x: arr2,
+              y: arr1,
+              marker:{
+                color: color2
+              },
+              type: 'bar'
+            };
             
-        //     var data = [trace1];
+            var data = [trace2];
             
-        //     var layout = {
-        //       title: 'Heart Rate'
-        //     };
+            var layout = {
+              title: 'Oxygen'
+            };
             
-        //     Plotly.newPlot('myDiv2', data, layout);
+            Plotly.newPlot('myDiv2', data, layout);
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");
