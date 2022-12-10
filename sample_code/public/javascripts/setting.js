@@ -52,7 +52,7 @@ function main() {
             window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+            $('#errMsg').html(jqXHR.responseJSON.error);
         });
     }
 
@@ -84,11 +84,11 @@ function main() {
             window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+            $('#errMsg').html(jqXHR.responseJSON.error);
         });
     }
 
-    //changing end time
+    //change end time
     function changeend() {
         if ($('#endHour').val() === "") {
             window.alert("Invalid start hour input");
@@ -116,7 +116,7 @@ function main() {
             window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+            $('#errMsg').html(jqXHR.responseJSON.error);
         });
     }
 
@@ -145,11 +145,10 @@ function main() {
             dataType: 'json'
         })
         .done(function (data, textStatus, jqXHR) {
-            $('#rxData').html(JSON.stringify(data, null, 2));
             window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $('#rxData').html(JSON.stringify(jqXHR, null, 2));
+            $('#PErrMsg').html(jqXHR.responseJSON.msg);
         });
     }
 
@@ -178,7 +177,7 @@ function main() {
             dataType: 'json'
         })
         .done(function (data, textStatus, jqXHR) {
-            $('#rxData').html(JSON.stringify(data, null, 2));
+            //$('#rxData').html(JSON.stringify(data, null, 2));
             window.location.reload();
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
