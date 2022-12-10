@@ -43,15 +43,16 @@ $(function (){
         var k = 0;
         var color2 = [];
         while(k < i){
-            if(i == o){
+            if(k == o){
                 color2.push('rgba(222,45,38,0.8)');
             }
-            else if(i == p){
+            else if(k == p){
                 color2.push('rgba(188,45,38,0.8)');
             }
             else{
                 color2.push('rgba(204,204,204,1)');
             }
+            k++;
         }
         var trace1 = {
             x: arr2,
@@ -97,15 +98,16 @@ $(function (){
           var k = 0;
           var color2 = [];
           while(k < i){
-              if(i == o){
+              if(k == o){
                   color2.push('rgba(222,45,38,0.8)');
               }
-              else if(i == p){
+              else if(k == p){
                   color2.push('rgba(188,45,38,0.8)');
               }
               else{
                   color2.push('rgba(204,204,204,1)');
               }
+              k++;
           }
           alert(min);
         alert(max);
