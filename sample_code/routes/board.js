@@ -54,7 +54,7 @@ router.post('/publishBPM', function(req, res){
         const decoded = jwt.decode(token, secret);
         console.log("Token verified!");
         tempValues = JSON.stringify(req.body.data);
-        BPMData = {
+        newBPMData = {
             BPM: tempValues.BPM,
             timeData: new Date(tempValues.time)
         }
