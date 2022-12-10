@@ -55,7 +55,7 @@ router.post('/publishBPM', function(req, res){
         console.log("Token verified!");
         tempValues = JSON.stringify(req.body.data);
         newBPMData = {
-            bpmEntry: Number(tempValues.HeartBeat),
+            bpmEntry: tempValues.HeartBeat,
             timeData: Date(parseInt(tempValues.time))
         }
         //console.log(req.body);

@@ -6,7 +6,7 @@ const deviceSchema = new db.Schema({
 });
 
 const bpmSchema = new db.Schema({
-    bpmEntry: Number,
+    bpmEntry: String,
     timeData: Date
 });
 
