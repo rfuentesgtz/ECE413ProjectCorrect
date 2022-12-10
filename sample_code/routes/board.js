@@ -59,7 +59,7 @@ router.post('/publishBPM', function(req, res){
             timeData: Date(parseInt(tempValues.time))
         }
         //console.log(req.body);
-        console.log("New BPM data");
+        console.log(newBPMData);
         //console.log(newBPMData.BPM, newBPMData.time);
         Customer.findOne({devices: {"$elemMatch": {deviceID : req.body.coreid}}}, function (err, users) {
             if (err) {
