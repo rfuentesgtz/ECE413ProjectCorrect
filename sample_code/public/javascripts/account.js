@@ -10,7 +10,7 @@ $(function (){
         dataType: 'json'
     })
     .done(function (data, textStatus, jqXHR) {
-        $('#rxData').html(JSON.stringify(data, null, 2));
+
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");

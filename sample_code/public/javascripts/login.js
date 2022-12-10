@@ -1,5 +1,14 @@
 // public/javasciprts/login.js
 function login() {
+    //when login button is clicked check if there are inputs, then save the values in txdata
+    if ($('#email').val() === "") {
+        window.alert("invalid email!");
+        return;
+    }
+    if ($('#password').val() === "") {
+        window.alert("invalid password");
+        return;
+    }
     let txdata = {
         email: $('#email').val(),
         password: $('#password').val()
@@ -19,7 +28,6 @@ function login() {
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         $('#errorMsg').html(jqXHR.responseJSON.error);           //display error message when they enter the wrong email or username
-        //$('#rxData').html(JSON.stringify(jqXHR, null, 2));
     });
 }
 
